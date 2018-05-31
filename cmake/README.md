@@ -336,3 +336,19 @@ unique, so there should be no problem with this, but MSVC prints warning
 nevertheless.  So, we disable it.  Unfortunately, this warning will also be
 produced when compiling code which merely uses protocol buffers, meaning you
 may have to disable it in your code too.
+
+Tutorial build notes
+==========================
+* Runtime Library setup
+If this is not set up correctly, there will be a lot of link errors. Normally, if
+the protobuf is built as static lib, this option should be /MT (using static runtime
+library), but should use /MD if protobuf is built as DLL. Set it in,
+  Configuration Properties->C/C++->Code Generation
+See https://msdn.microsoft.com/en-us/library/2kzt1wy3.aspx.
+
+* error 4146
+This can be solved by ignoring the 4146 error code in 
+  Configuration Properties->C/C++->Advanced->Disable Specific Warnings
+Or add "/wd4146" in C/C++->All Options->Addtional Options. See https://github.com/google/protobuf/issues/4276.
+
+
